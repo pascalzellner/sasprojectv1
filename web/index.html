@@ -40,6 +40,24 @@
       });
     }
   </script>
+  <!-- initialisation des services firebase-->
+  <script src="https://www.gstatic.com/firebasejs/8.2.6/firebase-app.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/7.20.0/firebase-auth.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/7.20.0/firebase-firestore.js"></script>
+  <!-- fichier accès aux services firebase du projet-->
+  <script>
+    // Your web app's Firebase configuration
+    var firebaseConfig = {
+      apiKey: "AIzaSyD4oQFL5MdnGX6OVCKJN2X5d4I6Mi5wYcs",
+      authDomain: "sassavoie-ea530.firebaseapp.com",
+      projectId: "sassavoie-ea530",
+      storageBucket: "sassavoie-ea530.appspot.com",
+      messagingSenderId: "98189335152",
+      appId: "1:98189335152:web:27cd54085c144673f9f2b5"
+    };
+    // Initialize Firebase
+    firebase.initializeApp(firebaseConfig);
+  </script>
   <script src="main.dart.js" type="application/javascript"></script>
 </body>
 </html>
