@@ -7,19 +7,19 @@ import 'package:sasprojectv1/screen/dispo/dispolist.dart';
 import 'package:sasprojectv1/services/auth.dart';
 import 'package:provider/provider.dart';
 
-class HomeOSNP extends StatefulWidget {
+class HomeARM extends StatefulWidget {
 
   final Effector actualuser;
-  HomeOSNP({this.actualuser});
-
+  HomeARM({this.actualuser});
+  
   @override
-  _HomeOSNPState createState() => _HomeOSNPState(actualuser: actualuser);
+  _HomeARMState createState() => _HomeARMState(actualuser: actualuser);
 }
 
-class _HomeOSNPState extends State<HomeOSNP> {
+class _HomeARMState extends State<HomeARM> {
 
   final Effector actualuser;
-  _HomeOSNPState({this.actualuser});
+  _HomeARMState({this.actualuser});
 
   final AuthService _auth = AuthService();
   String _communeValue;
@@ -54,17 +54,6 @@ class _HomeOSNPState extends State<HomeOSNP> {
       floatingActionButton: Row(
         mainAxisAlignment: MainAxisAlignment.end,
         children: [
-          FloatingActionButton(
-            onPressed: (){
-              setState(() {
-                _secteurValue='';
-              });
-            },
-            tooltip: "Gérer les archives",
-            child: Icon(Icons.archive),
-            backgroundColor: Colors.grey[600],
-          ),
-          SizedBox(width:10.0),
           FloatingActionButton(
             onPressed: (){
               setState(() {

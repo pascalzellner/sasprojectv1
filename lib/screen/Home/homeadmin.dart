@@ -57,6 +57,13 @@ class _HomeAdmState extends State<HomeAdm> {
         children: [
           FloatingActionButton(
             onPressed: (){},
+            tooltip: 'Gestion des archives',
+            child: Icon(Icons.archive),
+            backgroundColor: Colors.grey[600],
+          ),
+          SizedBox(width: 10.0,),
+          FloatingActionButton(
+            onPressed: (){},
             tooltip: 'Gestion des communes',
             child: Icon(Icons.location_city),
             backgroundColor: Colors.indigo[500],
