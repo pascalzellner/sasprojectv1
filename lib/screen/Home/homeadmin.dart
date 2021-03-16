@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 
 import 'package:sasprojectv1/models/effector.dart';
 import 'package:sasprojectv1/models/commune.dart';
+import 'package:sasprojectv1/screen/archive/archive.dart';
+import 'package:sasprojectv1/screen/authenticate/account.dart';
 import 'package:sasprojectv1/screen/dispo/dispolist.dart';
 
 import 'package:sasprojectv1/services/auth.dart';
@@ -29,6 +31,7 @@ class _HomeAdmState extends State<HomeAdm> {
 
   @override
   Widget build(BuildContext context) {
+
     List<Commune> communeList = Provider.of<List<Commune>>(context);
     
     return Scaffold(
@@ -36,7 +39,13 @@ class _HomeAdmState extends State<HomeAdm> {
         title:Text(actualuser.effectorName+' - '+actualuser.effectorRole,style: TextStyle(fontSize: 12.0),),
         actions: [
           TextButton.icon(
-            onPressed: (){}, 
+            onPressed: (){
+              Navigator.push(context, 
+              MaterialPageRoute(builder: (context){
+                return UserAccount(actualUser: actualuser,commmunes: communeList,);
+              })
+              );
+            }, 
             icon: Icon(Icons.settings,color: Colors.white,), 
             label: Text('Mon compte',style: TextStyle(color: Colors.white),)
             ),
@@ -56,10 +65,17 @@ class _HomeAdmState extends State<HomeAdm> {
         mainAxisAlignment: MainAxisAlignment.end,
         children: [
           FloatingActionButton(
-            onPressed: (){},
+            onPressed: (){
+              Navigator.push(context, 
+              MaterialPageRoute(builder: (context){
+                return Archives();
+              })
+              );
+            },
             tooltip: 'Gestion des archives',
             child: Icon(Icons.archive),
             backgroundColor: Colors.grey[600],
+            heroTag: 'btnArchive',
           ),
           SizedBox(width: 10.0,),
           FloatingActionButton(
@@ -67,6 +83,7 @@ class _HomeAdmState extends State<HomeAdm> {
             tooltip: 'Gestion des communes',
             child: Icon(Icons.location_city),
             backgroundColor: Colors.indigo[500],
+            heroTag: 'btnCommunes',
           ),
           SizedBox(width: 10.0,),
           FloatingActionButton(
@@ -74,6 +91,7 @@ class _HomeAdmState extends State<HomeAdm> {
             tooltip: 'Gestion des secteurs',
             child:Icon(Icons.public),
             backgroundColor: Colors.indigo[700],
+            heroTag: 'btnSecteurs',
           ),
           SizedBox(width:10.0),
           FloatingActionButton(
@@ -81,6 +99,7 @@ class _HomeAdmState extends State<HomeAdm> {
             tooltip: "Gestion des effecteurs",
             child: Icon(Icons.group),
             backgroundColor: Colors.indigo[900],
+            heroTag: 'btnEffecteurs',
           ),
           SizedBox(width:10.0),
           FloatingActionButton(
@@ -92,6 +111,7 @@ class _HomeAdmState extends State<HomeAdm> {
             tooltip: "Tout afficher",
             child: Icon(Icons.select_all),
             backgroundColor: Colors.indigo[900],
+            heroTag: 'btnAll',
           ),
           SizedBox(width:10.0),
           FloatingActionButton(
@@ -129,6 +149,7 @@ class _HomeAdmState extends State<HomeAdm> {
             },
             tooltip: 'Filtrer les disponibilités',
             child: Icon(Icons.search),
+            heroTag: 'BtnSearch',
           ),
         ],
       ),

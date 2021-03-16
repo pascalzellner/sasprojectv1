@@ -6,6 +6,7 @@ import 'package:sasprojectv1/screen/dispo/dispolist.dart';
 
 import 'package:sasprojectv1/services/auth.dart';
 import 'package:provider/provider.dart';
+import 'package:sasprojectv1/screen/authenticate/account.dart';
 
 class HomeMRH extends StatefulWidget {
 
@@ -35,7 +36,13 @@ class _HomeMRHState extends State<HomeMRH> {
         title:Text(actualuser.effectorName+' - '+actualuser.effectorRole,style: TextStyle(fontSize: 12.0),),
         actions: [
           TextButton.icon(
-            onPressed: (){}, 
+            onPressed: (){
+              Navigator.push(context, 
+              MaterialPageRoute(builder: (context){
+                return UserAccount(actualUser: actualuser,commmunes: communeList,);
+              })
+              );
+            }, 
             icon: Icon(Icons.settings,color: Colors.white,), 
             label: Text('Mon compte',style: TextStyle(color: Colors.white),)
             ),
@@ -63,6 +70,7 @@ class _HomeMRHState extends State<HomeMRH> {
             tooltip: "Tout afficher",
             child: Icon(Icons.select_all),
             backgroundColor: Colors.indigo[900],
+            heroTag: 'btnAll',
           ),
           SizedBox(width:10.0),
           FloatingActionButton(
@@ -100,6 +108,7 @@ class _HomeMRHState extends State<HomeMRH> {
             },
             tooltip: 'Filtrer les disponibilités',
             child: Icon(Icons.search),
+            heroTag: 'btnSearch',
           ),
         ],
       ),

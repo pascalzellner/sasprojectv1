@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 
 import 'package:sasprojectv1/models/effector.dart';
-import 'package:provider/provider.dart';
 import 'package:sasprojectv1/screen/Home/homeadmin.dart';
 import 'package:sasprojectv1/screen/Home/homearm.dart';
 import 'package:sasprojectv1/screen/Home/homeeffec.dart';
@@ -13,13 +12,13 @@ import 'package:sasprojectv1/screen/Home/homesec.dart';
 import 'package:sasprojectv1/screen/tools/loading.dart';
 import 'package:sasprojectv1/screen/Home/homeNP.dart';
 
-class Home extends StatelessWidget {
+class HomeRedirect extends StatelessWidget {
+
+  final Effector actualUser;
+  HomeRedirect({this.actualUser});
+
   @override
   Widget build(BuildContext context) {
-
-   
-    
-    final Effector actualUser = Provider.of<Effector>(context);
 
     if (actualUser==null){
       return Loading();

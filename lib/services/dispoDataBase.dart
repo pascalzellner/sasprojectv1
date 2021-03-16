@@ -193,4 +193,14 @@ class DispoDatabaseService{
     });
   }
 
+  //Liste des archives
+  Stream <List<Sasdispo>> get archives {
+    return archiveCollection.orderBy('sasdispoDeb').snapshots().map(_sasdispoListFromSnapshot);
+  }
+
+  //Suppression d'une archive
+  Future deleteArchiveDispo(Sasdispo dispo) async {
+    return archiveCollection.doc(dispo.sasdispoId).delete();
+  }
+
 }

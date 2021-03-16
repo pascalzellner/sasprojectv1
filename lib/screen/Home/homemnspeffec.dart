@@ -6,6 +6,8 @@ import 'package:sasprojectv1/screen/dispo/dispolist.dart';
 
 import 'package:sasprojectv1/services/auth.dart';
 import 'package:provider/provider.dart';
+import 'package:sasprojectv1/screen/dispo/newdispo.dart';
+import 'package:sasprojectv1/screen/authenticate/account.dart';
 
 class HomeMNSPeffec extends StatefulWidget {
 
@@ -36,7 +38,13 @@ class _HomeMNSPeffecState extends State<HomeMNSPeffec> {
         title:Text(actualuser.effectorName+' - '+actualuser.effectorRole,style: TextStyle(fontSize: 12.0),),
         actions: [
           TextButton.icon(
-            onPressed: (){}, 
+            onPressed: (){
+              Navigator.push(context, 
+              MaterialPageRoute(builder: (context){
+                return UserAccount(actualUser: actualuser,commmunes: communeList,);
+              })
+              );
+            }, 
             icon: Icon(Icons.settings,color: Colors.white,), 
             label: Text('Mon compte',style: TextStyle(color: Colors.white),)
             ),
@@ -56,17 +64,29 @@ class _HomeMNSPeffecState extends State<HomeMNSPeffec> {
         mainAxisAlignment: MainAxisAlignment.end,
         children: [
           FloatingActionButton(
-            onPressed: (){},
+            onPressed: (){
+              Navigator.push(context, 
+              MaterialPageRoute(builder: (context){
+                return NewDispoPlanning(actualEffector: actualuser,);
+              })
+              );
+            },
             tooltip: 'Créer une disponibilité',
             child: Icon(Icons.event),
             backgroundColor: Colors.indigo[600],
+            heroTag: 'btnNewDispo',
           ),
           SizedBox(width: 10.0,),
           FloatingActionButton(
-            onPressed: (){},
+            onPressed: (){
+              setState(() {
+                _secteurValue='MEFFEC';
+              });
+            },
             tooltip: 'Voir mes disponibilité',
             child: Icon(Icons.visibility),
             backgroundColor: Colors.indigo[800],
+            heroTag: 'btnMEFFEC',
           ),
           SizedBox(width: 10.0,),
           FloatingActionButton(
@@ -78,6 +98,7 @@ class _HomeMNSPeffecState extends State<HomeMNSPeffec> {
             tooltip: "Tout afficher",
             child: Icon(Icons.select_all),
             backgroundColor: Colors.indigo[900],
+            heroTag: 'btnAll',
           ),
           SizedBox(width:10.0),
           FloatingActionButton(
@@ -115,6 +136,7 @@ class _HomeMNSPeffecState extends State<HomeMNSPeffec> {
             },
             tooltip: 'Filtrer les disponibilités',
             child: Icon(Icons.search),
+            heroTag: 'btnSearch',
           ),
         ],
       ),

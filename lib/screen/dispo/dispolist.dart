@@ -20,8 +20,6 @@ class DispoListe extends StatelessWidget {
   String _requestType;
   String _requestInfo;
 
-  print(requestUser.effectorRole);
-
     switch(requestUser.effectorRole){
         //si le user est un MEFFEC (médecin effecteur)
         case'MEFFEC':
@@ -38,6 +36,21 @@ class DispoListe extends StatelessWidget {
           default:
         }
         break;
+        case'MSNP-EFFEC':
+        switch(requestListInfo){
+          case'MEFFEC':
+          _requestType='saseffector';
+          _requestInfo=requestUser.effectorId;
+          break;
+          case'':
+          _requestType='';
+          _requestInfo='';
+          break;
+          default:
+          _requestType = 'sassector';
+          _requestInfo = requestListInfo;
+        }
+        break;
         default:
         
           switch(requestListInfo){
@@ -51,8 +64,6 @@ class DispoListe extends StatelessWidget {
             _requestInfo = requestListInfo;
           }
     }
-    print(_requestType);
-    print(_requestInfo);
     return StreamBuilder(
       stream: DispoDatabaseService(sasdispoId: '',request: _requestType,requestInfo:_requestInfo).sasdispoliste,
       builder: (context,snapshot){

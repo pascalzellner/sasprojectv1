@@ -6,6 +6,8 @@ import 'package:sasprojectv1/screen/dispo/dispolist.dart';
 
 import 'package:sasprojectv1/services/auth.dart';
 import 'package:provider/provider.dart';
+import 'package:sasprojectv1/screen/authenticate/account.dart';
+import 'package:sasprojectv1/screen/archive/archive.dart';
 
 class HomeOSNP extends StatefulWidget {
 
@@ -35,7 +37,13 @@ class _HomeOSNPState extends State<HomeOSNP> {
         title:Text(actualuser.effectorName+' - '+actualuser.effectorRole,style: TextStyle(fontSize: 12.0),),
         actions: [
           TextButton.icon(
-            onPressed: (){}, 
+            onPressed: (){
+              Navigator.push(context, 
+              MaterialPageRoute(builder: (context){
+                return UserAccount(actualUser: actualuser,commmunes: communeList,);
+              })
+              );
+            }, 
             icon: Icon(Icons.settings,color: Colors.white,), 
             label: Text('Mon compte',style: TextStyle(color: Colors.white),)
             ),
@@ -56,13 +64,16 @@ class _HomeOSNPState extends State<HomeOSNP> {
         children: [
           FloatingActionButton(
             onPressed: (){
-              setState(() {
-                _secteurValue='';
-              });
+              Navigator.push(context, 
+              MaterialPageRoute(builder: (context){
+                return Archives();
+              })
+              );
             },
             tooltip: "Gérer les archives",
             child: Icon(Icons.archive),
             backgroundColor: Colors.grey[600],
+            heroTag: 'btnArchive',
           ),
           SizedBox(width:10.0),
           FloatingActionButton(
@@ -111,6 +122,7 @@ class _HomeOSNPState extends State<HomeOSNP> {
             },
             tooltip: 'Filtrer les disponibilités',
             child: Icon(Icons.search),
+            heroTag: 'btnSearch',
           ),
         ],
       ),
