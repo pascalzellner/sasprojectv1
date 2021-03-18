@@ -1,3 +1,8 @@
+//@author : Pascal ZELLNER
+//@CopyRight : Pascal ZELLNER - SAMU 73 - 2021
+//@licence : MIT
+//SAS MANAGER v1.0.2
+
 import 'package:flutter/material.dart';
 
 class Error extends StatelessWidget {

@@ -1,5 +1,9 @@
-import 'package:flutter/material.dart';
+//@author : Pascal ZELLNER
+//@CopyRight : Pascal ZELLNER - SAMU 73 - 2021
+//@licence : MIT
+//SAS MANAGER v1.0.2
 
+import 'package:flutter/material.dart';
 import 'package:sasprojectv1/models/effector.dart';
 import 'package:sasprojectv1/screen/archive/archiveTile.dart';
 import 'package:sasprojectv1/screen/tools/loading.dart';

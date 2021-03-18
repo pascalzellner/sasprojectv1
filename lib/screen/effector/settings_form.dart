@@ -4,24 +4,24 @@
 //SAS MANAGER v1.0.2
 
 import 'package:flutter/material.dart';
-import 'package:sasprojectv1/models/commune.dart';
 import 'package:sasprojectv1/models/effector.dart';
 import 'package:sasprojectv1/services/database.dart';
+import 'package:sasprojectv1/models/commune.dart';
+import 'package:sasprojectv1/screen/tools/loading.dart';
 
-class UserAccount extends StatefulWidget {
+class SettingsForm extends StatefulWidget {
 
-  final Effector actualUser;
-  final List<Commune> commmunes;
-  UserAccount({this.actualUser,this.commmunes});
+  final Effector actualEffector;
+  SettingsForm({this.actualEffector});
+
   @override
-  _UserAccountState createState() => _UserAccountState(actualUser: actualUser,commmunes: commmunes);
+  _SettingsFormState createState() => _SettingsFormState(actualEffector: actualEffector);
 }
 
-class _UserAccountState extends State<UserAccount> {
+class _SettingsFormState extends State<SettingsForm> {
 
-  final Effector actualUser;
-  final List<Commune> commmunes;
-  _UserAccountState({this.actualUser,this.commmunes});
+  final Effector actualEffector;
+  _SettingsFormState({this.actualEffector});
 
   final _formKey = GlobalKey<FormState>();
 
@@ -43,69 +43,19 @@ class _UserAccountState extends State<UserAccount> {
   String _currentEffectorCP;
 
 
+
   @override
   Widget build(BuildContext context) {
+    return StreamBuilder<List<Commune>>(
+      stream: DataBaseService().communes,
+      builder: (context, snapshot) {
 
-    return Scaffold(
-      appBar: AppBar(
-        title : Text('Mes informations')
-      ),
-      floatingActionButton: Row(
-        mainAxisAlignment: MainAxisAlignment.end,
-        children: [
-          FloatingActionButton(
-            onPressed: () async {
-              if(_formKey.currentState.validate()){
+        if(snapshot.hasData){
 
-                    //si c'est un ADM qui modifie la fct ADM est validée sinon mise à NP
-                    if(_currentEffectorFct=='ADM'){
-                      if(actualUser.effectorRole=='ADM'){
-                        _currentEffectorFct='ADM';
-                      }else{
-                        setState(() {
-                        _currentEffectorFct="NP";
-                      });
-                      }
-                    }
-                    //on va rechercher la commune dans la liste des communes
+          List<Commune> communes = snapshot.data;
+          //on ajoute une commune NP
 
-                    for(var commune in commmunes){
-                      int test = commune.nom.compareTo(_currentEffectorCommune??actualUser.effectorCommune);
-                      if(test == 0){
-                        setState(() {
-                          _currentEffectorCP=commune.codePostal;
-                        });
-                        setState(() {
-                          _currentEffectorSASSector=commune.sasSecteur;
-                        });
-                      }
-                    }
-
-                    //on mat à jour la base de donnée
-                      await DataBaseService(uid: actualUser.effectorId).updateEffectorData(
-                          _currentEffectorSASSector??actualUser.sasSectorName, 
-                          'NP', 
-                          _currentEffectorFct??actualUser.effectorRole, 
-                          _currentEffectorName??actualUser.effectorName, 
-                          _currentEffectorSpe??actualUser.effectorSpe, 
-                          'NP', 
-                          _currentEffectorCommune??actualUser.effectorCommune, 
-                          _currentEffectorCP??actualUser.effectorCP, 
-                          _currentEffectorAdress??actualUser.effectorAddress, 
-                          _currentEffectorRPPS??actualUser.effectorRPPS, 
-                          _currentEffectorSector??actualUser.effectorSector, 
-                          actualUser.effectorAppNb??0,
-                      );
-                      Navigator.pop(context);
-                  }
-            },
-            tooltip: 'Enregistrer',
-            child:Icon(Icons.save),
-          )
-      ],),
-      body:Container(
-        padding: const EdgeInsets.symmetric(vertical:20,horizontal:50),
-        child: Form(
+          return Form(
           key:_formKey,
           child:Column(
             children: <Widget>[
@@ -113,14 +63,14 @@ class _UserAccountState extends State<UserAccount> {
               // SizedBox(height:10.0),
               //Nom prénom du user, effecteur
               TextFormField(
-                initialValue: _currentEffectorName??actualUser.effectorName,
+                initialValue: _currentEffectorName??actualEffector.effectorName,
                 decoration: InputDecoration(hintText: 'Nom Prénom'),
                 validator: (val) => val.isEmpty ? '': null,
                 onChanged: (val) => setState(()=> _currentEffectorName = val),
               ),
               //dropdown fonction SAS
               DropdownButtonFormField(
-                value:_currentEffectorFct??actualUser.effectorRole,
+                value:_currentEffectorFct??actualEffector.effectorRole,
                 decoration: InputDecoration(hintText: 'Fonction SAS'),
                 items: fcts.map((fct){
                   return DropdownMenuItem(
@@ -134,17 +84,17 @@ class _UserAccountState extends State<UserAccount> {
               ),
               //Adresse du praticien
               TextFormField(
-                initialValue: _currentEffectorAdress??actualUser.effectorAddress,
+                initialValue: _currentEffectorAdress??actualEffector.effectorAddress,
                 decoration:InputDecoration(hintText: 'Votre adresse...'),
                 validator: (val) => val.isEmpty ? "" : null,
                 onChanged: (val) => setState(()=> _currentEffectorAdress = val),
               ),
               //Commune de l'adresse utilise la liste des communes de la base
               DropdownButtonFormField(
-                value:_currentEffectorCommune??actualUser.effectorCommune,
+                value:_currentEffectorCommune??actualEffector.effectorCommune,
                 decoration: InputDecoration(hintText: 'Commune'),
                 validator: (val) => val.isEmpty ? "" : null,
-                items: commmunes.map((fct){
+                items: communes.map((fct){
                   return DropdownMenuItem(
                     value:fct.nom,
                     child: Text(fct.nom), 
@@ -156,7 +106,7 @@ class _UserAccountState extends State<UserAccount> {
               ),
               //spécialité médicale du user
               DropdownButtonFormField(
-                value:_currentEffectorSpe??actualUser.effectorSpe,
+                value:_currentEffectorSpe??actualEffector.effectorSpe,
                 decoration: InputDecoration(hintText: 'Spécialité médicale'),
                 validator: (val) => val.isEmpty ? "" : null,
                 items: effectorSpes.map((fct){
@@ -171,7 +121,7 @@ class _UserAccountState extends State<UserAccount> {
               ),
               //secteur d'installation CPAM
               DropdownButtonFormField(
-                value:_currentEffectorSector??actualUser.effectorSector,
+                value:_currentEffectorSector??actualEffector.effectorSector,
                 decoration: InputDecoration(hintText: 'Secteur CPAM'),
                 validator: (val) => val.isEmpty ? "" : null,
                 items: sectorTypes.map((fct){
@@ -186,15 +136,70 @@ class _UserAccountState extends State<UserAccount> {
               ),
               //RPPS du praticien
               TextFormField(
-                initialValue: _currentEffectorRPPS??actualUser.effectorRPPS,
+                initialValue: _currentEffectorRPPS??actualEffector.effectorRPPS,
                 decoration:InputDecoration(hintText: 'Votre numéro RPPS'),
                 validator: (val) => val.isEmpty ? "" : null,
                 onChanged: (val) => setState(()=> _currentEffectorRPPS = val),
               ),
+              SizedBox(height:10.0),
+              ElevatedButton(
+                onPressed: () async {
+                  if(_formKey.currentState.validate()){
+
+                    //si c'est un ADM qui modifie la fct ADM est validée sinon mise à NP
+                    if(_currentEffectorFct=='ADM'){
+                      if(actualEffector.effectorRole=='ADM'){
+                        _currentEffectorFct='ADM';
+                      }else{
+                        setState(() {
+                        _currentEffectorFct="NP";
+                      });
+                      }
+                    }
+                    //on va rechercher la commune dans la liste des communes
+
+                    for(var commune in communes){
+                      int test = commune.nom.compareTo(_currentEffectorCommune??actualEffector.effectorCommune);
+                      if(test == 0){
+                        setState(() {
+                          _currentEffectorCP=commune.codePostal;
+                        });
+                        setState(() {
+                          _currentEffectorSASSector=commune.sasSecteur;
+                        });
+                      }
+                    }
+
+                    //on mat à jour la base de donnée
+                      await DataBaseService(uid: actualEffector.effectorId).updateEffectorData(
+                          _currentEffectorSASSector??actualEffector.sasSectorName, 
+                          'NP', 
+                          _currentEffectorFct??actualEffector.effectorRole, 
+                          _currentEffectorName??actualEffector.effectorName, 
+                          _currentEffectorSpe??actualEffector.effectorSpe, 
+                          'NP', 
+                          _currentEffectorCommune??actualEffector.effectorCommune, 
+                          _currentEffectorCP??actualEffector.effectorCP, 
+                          _currentEffectorAdress??actualEffector.effectorAddress, 
+                          _currentEffectorRPPS??actualEffector.effectorRPPS, 
+                          _currentEffectorSector??actualEffector.effectorSector, 
+                          actualEffector.effectorAppNb??0,
+                      );
+                      Navigator.pop(context);
+                  }
+                },
+                child: Text('Enregistrer'),
+              ),
             ],
           ),
-        ),
-      ),
+        );
+
+        } else{
+          return Loading();
+        }
+
+        
+      }
     );
   }
 }

@@ -1,10 +1,19 @@
+//@author : Pascal ZELLNER
+//@CopyRight : Pascal ZELLNER - SAMU 73 - 2021
+//@licence : MIT
+//SAS MANAGER v1.0.2
+
 import 'package:flutter/material.dart';
 
 import 'package:sasprojectv1/models/effector.dart';
 import 'package:sasprojectv1/models/commune.dart';
+import 'package:sasprojectv1/models/secteur.dart';
 import 'package:sasprojectv1/screen/archive/archive.dart';
 import 'package:sasprojectv1/screen/authenticate/account.dart';
+import 'package:sasprojectv1/screen/commune/communeManager.dart';
 import 'package:sasprojectv1/screen/dispo/dispolist.dart';
+import 'package:sasprojectv1/screen/effector/effectors_list.dart';
+import 'package:sasprojectv1/screen/secteur/secteurSASManager.dart';
 
 import 'package:sasprojectv1/services/auth.dart';
 import 'package:provider/provider.dart';
@@ -33,6 +42,7 @@ class _HomeAdmState extends State<HomeAdm> {
   Widget build(BuildContext context) {
 
     List<Commune> communeList = Provider.of<List<Commune>>(context);
+    List<Secteur> secteurList = Provider.of<List<Secteur>>(context);
     
     return Scaffold(
       appBar: AppBar(
@@ -79,7 +89,13 @@ class _HomeAdmState extends State<HomeAdm> {
           ),
           SizedBox(width: 10.0,),
           FloatingActionButton(
-            onPressed: (){},
+            onPressed: (){
+              Navigator.push(context, 
+              MaterialPageRoute(builder: (context){
+                return CommuneManager(communeList: communeList,secteurList:secteurList,);
+              })
+              );
+            },
             tooltip: 'Gestion des communes',
             child: Icon(Icons.location_city),
             backgroundColor: Colors.indigo[500],
@@ -87,7 +103,13 @@ class _HomeAdmState extends State<HomeAdm> {
           ),
           SizedBox(width: 10.0,),
           FloatingActionButton(
-            onPressed: (){},
+            onPressed: (){
+              Navigator.push(context, 
+              MaterialPageRoute(builder: (context){
+                return SecteurManager(secteurList: secteurList,);
+              })
+              );
+            },
             tooltip: 'Gestion des secteurs',
             child:Icon(Icons.public),
             backgroundColor: Colors.indigo[700],
@@ -95,7 +117,13 @@ class _HomeAdmState extends State<HomeAdm> {
           ),
           SizedBox(width:10.0),
           FloatingActionButton(
-            onPressed: (){},
+            onPressed: (){
+              Navigator.push(context, 
+              MaterialPageRoute(builder: (context){
+                return EffectorsList();
+              })
+              );
+            },
             tooltip: "Gestion des effecteurs",
             child: Icon(Icons.group),
             backgroundColor: Colors.indigo[900],

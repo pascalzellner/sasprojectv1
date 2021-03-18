@@ -1,8 +1,7 @@
 //@author : Pascal ZELLNER
 //@CopyRight : Pascal ZELLNER - SAMU 73 - 2021
 //@licence : MIT
-//Moddule du splash screen
-//SAS MANAGER v0.1.5
+//SAS MANAGER v1.0.2
 
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';

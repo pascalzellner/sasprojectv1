@@ -1,8 +1,7 @@
 //@author : Pascal ZELLNER
 //@CopyRight : Pascal ZELLNER - SAMU 73 - 2021
 //@licence : MIT
-//Module de confirmation de mise à disposition
-//SAS MANAGER v0.1.5
+//SAS MANAGER v1.0.2
 
 import 'package:flutter/material.dart';
 import 'package:sasprojectv1/models/sasdispo.dart';

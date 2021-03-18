@@ -1,7 +1,11 @@
+//@author : Pascal ZELLNER
+//@CopyRight : Pascal ZELLNER - SAMU 73 - 2021
+//@licence : MIT
+//SAS MANAGER v1.0.2
+
 import 'package:flutter/material.dart';
 import 'package:sasprojectv1/models/effector.dart';
 import 'package:sasprojectv1/models/sasdispo.dart';
-import 'package:sasprojectv1/screen/dispo/dispoconfirm.dart';
 import 'package:sasprojectv1/services/dispoDataBase.dart';
 
 class ArchiveTile extends StatelessWidget {
@@ -56,7 +60,13 @@ class ArchiveTile extends StatelessWidget {
                 Text('Finalisation: '+_tag(), style: TextStyle(fontSize: 12.0,),),
               ],
             ),
-            
+             Row(
+              mainAxisAlignment: MainAxisAlignment.start,
+              children: [
+                SizedBox(width: 70.0,),
+                Text('Observation: '+dispo.sasdispoTxt, style: TextStyle(fontSize: 12.0,),),
+              ],
+            ),
             Row(
               mainAxisAlignment: MainAxisAlignment.end,
               children: [

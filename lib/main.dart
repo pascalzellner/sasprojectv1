@@ -1,8 +1,7 @@
 //@author : Pascal ZELLNER
 //@CopyRight : Pascal ZELLNER - SAMU 73 - 2021
 //@licence : MIT
-//Module d'acceuil des users du SAS
-//SAS MANAGER v0.1.5
+//SAS MANAGER v1.0.2
 
 
 import 'package:flutter/material.dart';

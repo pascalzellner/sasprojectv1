@@ -1,16 +1,11 @@
 //@author : Pascal ZELLNER
 //@CopyRight : Pascal ZELLNER - SAMU 73 - 2021
 //@licence : MIT
-//composant de création de plage de disponibilité pour le SAS 
-
+//SAS MANAGER v1.0.2
 
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
-import 'package:sasprojectv1/models/sasuser.dart';
-import 'package:sasprojectv1/services/database.dart';
 import 'package:sasprojectv1/models/effector.dart';
 import 'package:sasprojectv1/services/dispoDataBase.dart';
-import 'package:sasprojectv1/screen/tools/loading.dart';
 
 import 'package:flutter_datetime_picker/flutter_datetime_picker.dart';
 
@@ -243,10 +238,16 @@ class _NewDispoPlanningState extends State<NewDispoPlanning> {
                                 _error = 'Préciser début, fin et type de disponibilité !';
                                 });
                               }else{
-                                setState(() {
-                                _error = '';
-                                });
-                                _showConfirmationPanel(actualEffector);
+                                if(actualEffector.sasSectorName.compareTo('NP')==0){
+                                  setState(() {
+                                    _error='Commune non paramétrée, contacter un administrateur';
+                                  });
+                                }else{
+                                  setState(() {
+                                  _error = '';
+                                  });
+                                  _showConfirmationPanel(actualEffector);
+                                }  
                               }
                             }
                           },
